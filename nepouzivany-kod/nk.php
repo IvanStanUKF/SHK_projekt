@@ -1,7 +1,11 @@
 
+						<li><a href="#intro" class="smoothScroll">Intro</a></li>
+						<li><a href="#overview" class="smoothScroll">O kurze</a></li>
+						<li><a href="#detail" class="smoothScroll">Ciele kurzu</a></li>
+						<li><a href="#register" class="smoothScroll">Registrácia</a></li>
                         <li><a href="#speakers" class="smoothScroll">Speakers</a></li>
 						<li><a href="#program" class="smoothScroll">Programs</a></li>
-
+						<li><a href="#faq" class="smoothScroll">Časté otázky</a></li>
 						<li><a href="#venue" class="smoothScroll">Venue</a></li>
 						<li><a href="#sponsors" class="smoothScroll">Sponsors</a></li>
 						<li><a href="#contact" class="smoothScroll">Contact</a></li>

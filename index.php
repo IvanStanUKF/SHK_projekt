@@ -88,7 +88,7 @@
 					</div>
 
 					<div class="wow fadeInUp col-md-5 col-sm-5" data-wow-delay="1s">
-						<form action="#" method="POST">
+						<form action="inc/formular.php" method="POST" id="registracia">
 							<input name="meno" type="text" class="form-control" id="firstname" placeholder="Meno" required>
 							<input name="priezvisko" type="text" class="form-control" id="lastname" placeholder="Priezvisko" required>
 							<input name="vek" type="number" class="form-control" id="age" placeholder="Vek" required>
@@ -97,6 +97,7 @@
 							<div class="col-md-offset-6 col-md-6 col-sm-offset-1 col-sm-10">
 								<input name="submit" type="submit" class="form-control" id="submit" value="Registrácia">
 							</div>
+							<p>Vyplnením formulára súhlasíte so spracovaním dát (GDPR)!</p>
 						</form>
 					</div>
 

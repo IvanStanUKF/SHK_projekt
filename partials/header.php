@@ -57,13 +57,6 @@
 							$odkazy_navigacia = array("Intro"=>"#intro", "O kurze"=>"#overview", "Ciele kurzu"=>"#detail", "Registrácia"=>"#register", "Časté otázky"=>"#faq");
 							echo(pridat_navigaciu($odkazy_navigacia));
 						?>
-                        <!--
-						<li><a href="#intro" class="smoothScroll">Intro</a></li>
-						<li><a href="#overview" class="smoothScroll">O kurze</a></li>
-						<li><a href="#detail" class="smoothScroll">Ciele kurzu</a></li>
-						<li><a href="#register" class="smoothScroll">Registrácia</a></li>
-						<li><a href="#faq" class="smoothScroll">Časté otázky</a></li>
-                        -->
 					</ul>
 
 				</div>
