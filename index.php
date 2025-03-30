@@ -1,65 +1,6 @@
-<!DOCTYPE html>
-<html lang="sk">
-	<head>
-		<title>Slovenské historické kurzy</title>
-		<meta name="description" content="Slovenské historické kurzy poskytujú prehľad o kľúčových obdobiach slovenských dejín, historických udalostiach, významných osobnostiach, politických zmenách a sociálnych vývojových procesoch, ktoré formovali dnešné Slovensko.">
-		<meta name="author" content="SHK">
-		<meta charset="UTF-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=Edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
-		<link rel="stylesheet" href="css/bootstrap.min.css">
-		<link rel="stylesheet" href="css/animate.css">
-		<link rel="stylesheet" href="css/font-awesome.min.css">
-		<link rel="stylesheet" href="css/owl.theme.css">
-		<link rel="stylesheet" href="css/owl.carousel.css">
-
-		<link rel="stylesheet" href="css/style.css">
-
-		<!-- Google Font -->
-		<link href='https://fonts.googleapis.com/css?family=Poppins:400,500,600' rel='stylesheet' type='text/css'>
-	</head>
-
-	<body data-spy="scroll" data-offset="50" data-target=".navbar-collapse">
-
-		<!-- =========================
-			Načítavací indikátor
-		============================== -->
-		<div class="preloader">
-			<div class="sk-rotating-plane"></div>
-		</div>
-
-
-		<!-- =========================
-			Navigácia (header)
-		============================== -->
-		<div class="navbar navbar-fixed-top custom-navbar" role="navigation">
-			<div class="container">
-
-				<!-- Navigačný header -->
-				<div class="navbar-header">
-					<button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-						<span class="icon icon-bar"></span>
-						<span class="icon icon-bar"></span>
-						<span class="icon icon-bar"></span>
-					</button>
-					<a href="#" class="navbar-brand">SHK</a>
-				</div>
-
-				<div class="collapse navbar-collapse">
-
-					<ul class="nav navbar-nav navbar-right">
-						<li><a href="#intro" class="smoothScroll">Intro</a></li>
-						<li><a href="#overview" class="smoothScroll">O kurze</a></li>
-						<li><a href="#detail" class="smoothScroll">Ciele kurzu</a></li>
-						<li><a href="#register" class="smoothScroll">Registrácia</a></li>
-						<li><a href="#faq" class="smoothScroll">Časté otázky</a></li>
-					</ul>
-
-				</div>
-
-			</div>
-		</div>
+<?php 
+	include("partials/header.php");
+?>
 
 
 		<!-- =========================
@@ -147,12 +88,12 @@
 					</div>
 
 					<div class="wow fadeInUp col-md-5 col-sm-5" data-wow-delay="1s">
-						<form action="#" method="post">
-							<input name="firstname" type="text" class="form-control" id="firstname" placeholder="Meno">
-							<input name="lastname" type="text" class="form-control" id="lastname" placeholder="Priezvisko">
-							<input name="age" type="number" class="form-control" id="age" placeholder="Vek">
-							<input name="phone" type="telephone" class="form-control" id="phone" placeholder="Telefónne číslo">
-							<input name="email" type="email" class="form-control" id="email" placeholder="Email">
+						<form action="#" method="POST">
+							<input name="meno" type="text" class="form-control" id="firstname" placeholder="Meno" required>
+							<input name="priezvisko" type="text" class="form-control" id="lastname" placeholder="Priezvisko" required>
+							<input name="vek" type="number" class="form-control" id="age" placeholder="Vek" required>
+							<input name="telcislo" type="telephone" class="form-control" id="phone" placeholder="Telefónne číslo" required>
+							<input name="email" type="email" class="form-control" id="email" placeholder="Email" required>
 							<div class="col-md-offset-6 col-md-6 col-sm-offset-1 col-sm-10">
 								<input name="submit" type="submit" class="form-control" id="submit" value="Registrácia">
 							</div>
@@ -238,47 +179,6 @@
 		</section>
 
 
-		<!-- =========================
-			Footer (sekcia)
-		============================== -->
-		<footer>
-			<div class="container">
-				<div class="row">
-
-					<div class="col-md-12 col-sm-12">
-						<p class="wow fadeInUp" data-wow-delay="0.6s">Všetky práva vyhradené &copy; 2025 SHK
-							
-							| Design: <a rel="nofollow" href="http://www.templatemo.com/page/1" target="_parent">Templatemo</a></p>
-
-						<ul class="social-icon">
-							<li><a href="#" class="fa fa-facebook wow fadeInUp" data-wow-delay="1s"></a></li>
-							<li><a href="#" class="fa fa-twitter wow fadeInUp" data-wow-delay="1.3s"></a></li>
-							<li><a href="#" class="fa fa-dribbble wow fadeInUp" data-wow-delay="1.6s"></a></li>
-							<li><a href="#" class="fa fa-behance wow fadeInUp" data-wow-delay="1.9s"></a></li>
-							<li><a href="#" class="fa fa-google-plus wow fadeInUp" data-wow-delay="2s"></a></li>
-						</ul>
-
-					</div>
-					
-				</div>
-			</div>
-		</footer>
-
-
-		<!-- Back top -->
-		<a href="#back-top" class="go-top"><i class="fa fa-angle-up"></i></a>
-
-
-		<!-- =========================
-			Skripty (JavaScript)
-		============================== -->
-		<script src="js/jquery.js"></script>
-		<script src="js/bootstrap.min.js"></script>
-		<script src="js/jquery.parallax.js"></script>
-		<script src="js/owl.carousel.min.js"></script>
-		<script src="js/smoothscroll.js"></script>
-		<script src="js/wow.min.js"></script>
-		<script src="js/custom.js"></script>
-
-	</body>
-</html>
+<?php 
+	include("partials/footer.php");
+?>
