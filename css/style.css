@@ -1,13 +1,5 @@
-/*
-
-New Event
-
-http://www.templatemo.com/tm-486-new-event
-
-*/
-
 body {
-		background: #ffffff;
+		background: #cccccc;
     font-family: 'Poppins', sans-serif;
     font-style: normal;
 		font-weight: 400;
@@ -15,7 +7,7 @@ body {
 
 
 /*---------------------------------------
-    Typorgraphy              
+    Typografia
 -----------------------------------------*/
 h1,h2,h3,h4,h5,h6 {
   font-weight: 600;
@@ -46,7 +38,7 @@ h5 {
 
 p {
     color: #707070;
-    font-size: 14px;
+    font-size: 18px;
     line-height: 24px;
 }
 
@@ -57,7 +49,7 @@ a {
 
 
 /*---------------------------------------
-    General               
+    Všeobecné
 -----------------------------------------*/
 .section-title {
   margin-bottom: 32px;
@@ -142,7 +134,7 @@ footer {
 
 
 /*---------------------------------------
-    Preloader section              
+    Načítavací indikátor
 -----------------------------------------*/
 .preloader {
   position: fixed;
@@ -190,7 +182,7 @@ footer {
 
 
 /*---------------------------------------
-    Navigation Links section              
+    Navigácia (sekcia)
 -----------------------------------------*/
 .custom-navbar {
     margin-bottom: 0;
@@ -259,7 +251,7 @@ footer {
 
 
 /*---------------------------------------
-    Intro section              
+    Intro (sekcia)
 -----------------------------------------*/
 #intro {
     background: url('../images/intro-bg.jpg') 50% 0 repeat-y fixed;
@@ -286,7 +278,7 @@ footer {
 
 
 /*---------------------------------------
-   Overview  section              
+   O kurze (sekcia)
 -----------------------------------------*/
 #overview img {
   position: relative;
@@ -296,7 +288,7 @@ footer {
 
 
 /*---------------------------------------
-    Detail section              
+    Ciele kurzu (sekcia)
 -----------------------------------------*/
 #detail {
     background: #222;
@@ -306,6 +298,10 @@ footer {
 #detail .fa {
   color: #f2545f;
   font-size: 48px;
+}
+
+#detail h3 {
+  color: #aaaaaa;
 }
 
 
@@ -358,7 +354,7 @@ footer {
 
 
 /*---------------------------------------
-   Program section              
+   Program (sekcia)
 -----------------------------------------*/
 #program h4 {
     color: #808080;
@@ -417,7 +413,7 @@ footer {
 
 
 /*---------------------------------------
-    Regsiter section              
+    Registrácia (sekcia)          
 -----------------------------------------*/
 #register {
     background: url('../images/register-bg.jpg') 50% 0 repeat-y fixed;
@@ -455,13 +451,17 @@ footer {
   color: #222;
 }
 
+#register h3 {
+  color: #aaaaaa;
+}
+
 
 
 /*---------------------------------------
-   Faq section              
+   Časté otázky (sekcia)          
 -----------------------------------------*/
 #faq {
-  background: #f9f9f9;
+  /*background: #f9f9f9;*/
   padding-top: 8rem;
   padding-bottom: 8rem;
 }
@@ -604,7 +604,7 @@ footer {
 
 
 /*---------------------------------------
-   Footer section              
+   Footer
 -----------------------------------------*/
 footer {
   background-attachment: fixed;
@@ -636,7 +636,7 @@ footer {
 
 
 /*---------------------------------------
-   Social icon             
+   Ikony
 -----------------------------------------*/
 .social-icon {
     position: relative;
@@ -670,7 +670,7 @@ footer {
 
 
 /*---------------------------------------
-   Responsive styles            
+   Responzívne štýly
 -----------------------------------------*/
 @media (max-width: 980px) {
 
