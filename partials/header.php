@@ -1,5 +1,7 @@
 <?php
-    require("inc/funkcie.php");
+    require_once("inc/funkcie.php");
+	require_once("inc/triedy/databaza.php");
+	require_once("inc/triedy/formdata.php");
 ?>
 
 <!DOCTYPE html>
@@ -47,14 +49,13 @@
 						<span class="icon icon-bar"></span>
 						<span class="icon icon-bar"></span>
 					</button>
-					<a href="#" class="navbar-brand">SHK</a>
+					<a href="index.php" class="navbar-brand">SHK</a>
 				</div>
 
 				<div class="collapse navbar-collapse">
 
 					<ul class="nav navbar-nav navbar-right">
 						<?php
-							$odkazy_navigacia = array("Intro"=>"#intro", "O kurze"=>"#overview", "Ciele kurzu"=>"#detail", "Registrácia"=>"#register", "Časté otázky"=>"#faq");
 							echo(pridat_navigaciu($odkazy_navigacia));
 						?>
 					</ul>

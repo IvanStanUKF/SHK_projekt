@@ -1,35 +1,36 @@
 function overenie_formularu(event) {
-    var meno = document.getElementById("firstname").value;
-    var priezvisko = document.getElementById("lastname").value;
-    var vek = document.getElementById("age").value;
-    var telcislo = document.getElementById("phone").value;
-    var email = document.getElementById("email").value;
+    var meno = document.getElementById("firstname").value.trim();
+    var priezvisko = document.getElementById("lastname").value.trim();
+    var vek = document.getElementById("age").value.trim();
+    var telcislo = document.getElementById("phone").value.trim();
+    var email = document.getElementById("email").value.trim();
+    telcislo = telcislo.replace(/\s+/g, "");
     
-    if (meno == "" || priezvisko == "" || vek == "" || telcislo == "" || email == "") {
+    if (meno.trim() === "" || priezvisko.trim() === "" || vek.trim() === "" || telcislo.trim() === "" || email.trim() === "") {
         alert("Vyplňte požadované údaje!");
         event.preventDefault();
         return;
     }
 
-    else if (!/^[a-zA-Z]+$/.test(meno)) {
-        alert("Meno nemôže obsahovať číslice!");
+    else if (!/^[\p{L}]+$/u.test(meno) || !/^[\p{L}]+$/u.test(priezvisko)) {
+        alert("Meno a Priezvisko musia obsahovať iba písmená!");
         event.preventDefault();
         return;
     }
 
-    else if (/\d/.test(meno)) {
-        alert("Meno nemôže obsahovať číslice!");
+    else if (!/^\d+$/.test(vek)) {
+        alert("Vek musí byť číslo!");
         event.preventDefault();
         return;
     }
 
-    else if (/\d/.test(priezvisko)) {
-        alert("Priezvisko nemôže obsahovať číslice!");
+    else if (!/^\d+$/.test(telcislo)) {
+        alert("Telefónne číslo musí obsahovať iba číslice!");
         event.preventDefault();
         return;
     }
 
-    else if (/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(email) == false) {
+    else if (!/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(email)) {
         alert("Zlý formát emailu!");
         event.preventDefault();
         return;
@@ -46,10 +47,7 @@ function overenie_formularu(event) {
             "Kliknite na OK pre potvrdenie údajov a súhlasenie s ich spracovaním. Kliknite na Zrušiť pre opravu údajov.\n"
         );
 
-        if (potvrdenie) {
-            alert("Registrácia prebehla úspešne, viac informácií vám poskytneme emailom.");
-        } 
-        else {
+        if (!potvrdenie) {
             event.preventDefault();
             return;
         }

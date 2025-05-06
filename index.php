@@ -1,5 +1,37 @@
 <?php 
+	$odkazy_navigacia = array("Intro"=>"#intro", "O kurze"=>"#overview", "Ciele kurzu"=>"#detail", "Registrácia"=>"#register", "Časté otázky"=>"#faq", "Admin"=>"admin.php");
 	include("partials/header.php");
+
+	$uspesna_registracia = false;
+	if ($_SERVER["REQUEST_METHOD"] == "POST") {
+		$meno = trim($_POST["meno"] ?? "");
+		$priezvisko = trim($_POST["priezvisko"] ?? "");
+		$vek = trim($_POST["vek"] ?? "");
+		$telcislo = trim($_POST["telcislo"] ?? "");
+		$email = trim($_POST["email"] ?? "");
+
+		$meno = mb_ucfirst($meno); 
+		$priezvisko = mb_ucfirst($priezvisko); 
+		$telcislo = str_replace(" ", "", $telcislo);
+
+		if (overenieUdajov($meno, $priezvisko, $vek, $telcislo, $email)) {
+			try {
+				$databaza = new Databaza();
+				$formdata = new FormData($databaza);
+	
+				if ($formdata->pridatUdaje($meno, $priezvisko, $vek, $telcislo, $email)) {
+					$uspesna_registracia = true;
+				}
+				else {
+					echo "<script>alert('Nepodarilo sa odoslať formulár!');</script>";
+				}
+			}
+			catch (PDOException $e) {
+				$chyba = "Chyba pripojenia k databáze: " . $e->getMessage();
+				echo "<script>alert('$chyba');</script>";
+			}
+		}
+	}
 ?>
 
 
@@ -78,7 +110,7 @@
 		<!-- =========================
 			Registrácia (sekcia) 
 		============================== -->
-		<section id="register" class="parallax-section">
+		<section id="register" class="parallax-section formulare">
 			<div class="container">
 				<div class="row">
 
@@ -88,12 +120,12 @@
 					</div>
 
 					<div class="wow fadeInUp col-md-5 col-sm-5" data-wow-delay="1s">
-						<form action="inc/formular.php" method="POST" id="registracia">
-							<input name="meno" type="text" class="form-control" id="firstname" placeholder="Meno" required>
-							<input name="priezvisko" type="text" class="form-control" id="lastname" placeholder="Priezvisko" required>
-							<input name="vek" type="number" class="form-control" id="age" placeholder="Vek" required>
-							<input name="telcislo" type="telephone" class="form-control" id="phone" placeholder="Telefónne číslo" required>
-							<input name="email" type="email" class="form-control" id="email" placeholder="Email" required>
+						<form action="" method="POST" id="registracia">
+							<input name="meno" type="text" class="form-control" id="firstname" placeholder="Meno" value="<?php echo htmlspecialchars($meno ?? ''); ?>" required>
+							<input name="priezvisko" type="text" class="form-control" id="lastname" placeholder="Priezvisko" value="<?php echo htmlspecialchars($priezvisko ?? ''); ?>" required>
+							<input name="vek" type="number" class="form-control" id="age" placeholder="Vek" value="<?php echo htmlspecialchars($vek ?? ''); ?>" required>
+							<input name="telcislo" type="telephone" class="form-control" id="phone" placeholder="Telefónne číslo" value="<?php echo htmlspecialchars($telcislo ?? ''); ?>" required>
+							<input name="email" type="email" class="form-control" id="email" placeholder="Email" value="<?php echo htmlspecialchars($email ?? ''); ?>" required>
 							<div class="col-md-offset-6 col-md-6 col-sm-offset-1 col-sm-10">
 								<input name="submit" type="submit" class="form-control" id="submit" value="Registrácia">
 							</div>
@@ -179,6 +211,15 @@
 			</div>
 		</section>
 
+
+<?php if (!empty($uspesna_registracia) && $uspesna_registracia): ?>
+	<script>
+		window.onload = function() {
+			alert("Registrácia prebehla úspešne, viac informácií vám poskytneme emailom.");
+			window.location.href = "index.php";
+		};
+	</script>
+<?php endif; ?>
 
 <?php 
 	include("partials/footer.php");

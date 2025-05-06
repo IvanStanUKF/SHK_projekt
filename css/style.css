@@ -413,17 +413,31 @@ footer {
 
 
 /*---------------------------------------
-    Registrácia (sekcia)          
+    Formuláre (sekcie):
+      Registrácia (sekcia)
+      Prihlásenie (sekcia)
 -----------------------------------------*/
 #register {
-    background: url('../images/register-bg.jpg') 50% 0 repeat-y fixed;
-    -webkit-background-size: cover;
-    background-size: cover;
-    background-position: center center;
-    color: #ffffff;
+  background: url('../images/register-bg.jpg') 50% 0 repeat-y fixed;
+  -webkit-background-size: cover;
+  background-size: cover;
+  background-position: center center;
+  color: #ffffff;
 }
 
-#register .form-control {
+#admin-prihlasenie, #admin-upravovanie {
+  padding-top: 50px;
+  padding-bottom: 50px;
+  background-color: #222;
+  color: #ffffff;
+}
+
+#admin-prihlasenie .admin-nadpis, #admin-upravovanie .admin-nadpis {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.formulare .form-control {
   background: transparent;
   border: 2px solid #ffffff;
   border-radius: 0px;
@@ -431,11 +445,11 @@ footer {
   margin-bottom: 16px;
 }
 
-#register input {
+.formulare input {
   height: 45px;
 }
 
-#register input[type="submit"] {
+.formulare input[type="submit"] {
   background: #f2545f;
   border-radius: 100px;
   border: none;
@@ -446,13 +460,56 @@ footer {
   transition: all 0.4s ease-in-out;
 }
 
-#register input[type="submit"]:hover {
+.formulare input[type="submit"]:hover {
   background: #ffffff;
   color: #222;
 }
 
-#register h3 {
+.formulare h3 {
   color: #aaaaaa;
+}
+
+
+
+/*---------------------------------------
+    Tabuľka databázy (sekcia)
+-----------------------------------------*/
+#tabulka-databazy {
+  padding-top: 30px;
+  padding-bottom: 20px;
+}
+
+#tabulka-databazy h2 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.tabulka-databazy {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px auto;
+  background-color: #1e1e1e;
+  color: #f0f0f0;
+}
+
+.tabulka-databazy th, .tabulka-databazy td {
+  border: 1px solid #444;
+  padding: 10px 15px;
+  text-align: left;
+}
+
+.tabulka-databazy th {
+  background-color: #2e2e2e;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.tabulka-databazy tr:nth-child(even) {
+  background-color: #2a2a2a;
+}
+
+.tabulka-databazy tr:hover {
+  background-color: #3a3f4b;
 }
 
 
