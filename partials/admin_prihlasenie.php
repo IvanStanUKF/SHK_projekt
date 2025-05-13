@@ -16,8 +16,15 @@
 
 					<div class="wow fadeInUp col-md-6 col-sm-6" data-wow-delay="1s">
 						<form action="" method="POST" id="prihlasenie">
-							<input name="admin-meno" type="text" class="form-control" id="admin-meno" placeholder="Administrátorské meno" required>
+							<input name="admin-email" type="email" class="form-control" id="admin-email" placeholder="Administrátorský email" required>
 							<input name="admin-heslo" type="password" class="form-control" id="admin-heslo" placeholder="Heslo" required>
+							
+							<?php if (isset($chybaPrihlasenia) && !empty($chybaPrihlasenia)): ?>
+								<div style="color:red;">
+									<?php echo $chybaPrihlasenia; ?>
+								</div>
+							<?php endif; ?>
+							
 							<div class="col-md-offset-6 col-md-6 col-sm-offset-1 col-sm-10">
 								<input name="aprihlasenie" type="submit" class="form-control" id="aprihlasenie" value="Prihlásenie">
 							</div>

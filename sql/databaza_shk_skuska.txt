@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hostiteľ: 127.0.0.1
--- Čas generovania: Út 06.Máj 2025, 11:04
+-- Čas generovania: Út 13.Máj 2025, 09:40
 -- Verzia serveru: 10.4.32-MariaDB
 -- Verzia PHP: 8.2.12
 
@@ -14,6 +14,8 @@ SET time_zone = "+00:00";
 --
 -- Databáza: `databaza_shk_skuska`
 --
+CREATE DATABASE IF NOT EXISTS `databaza_shk_skuska` DEFAULT CHARACTER SET utf8 COLLATE utf8_slovak_ci;
+USE `databaza_shk_skuska`;
 
 -- --------------------------------------------------------
 
@@ -23,16 +25,17 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `admindata` (
   `id_admindata` int(11) NOT NULL,
-  `admin_meno` varchar(30) NOT NULL,
-  `admin_heslo` varchar(30) NOT NULL
+  `admin_email` varchar(50) NOT NULL,
+  `admin_heslo` varchar(100) NOT NULL,
+  `admin_rola` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_slovak_ci;
 
 --
 -- Sťahujem dáta pre tabuľku `admindata`
 --
 
-INSERT INTO `admindata` (`id_admindata`, `admin_meno`, `admin_heslo`) VALUES
-(1, 'administrator', 'AdminHeslo30');
+INSERT INTO `admindata` (`id_admindata`, `admin_email`, `admin_heslo`, `admin_rola`) VALUES
+(1, 'administrator@shk.com', '$2y$10$9Y4YHllJ6ZJhGVbtlyLAbu98gXgRQWn5FzjZGlRhaH9kTflegGaaW', 0);
 
 -- --------------------------------------------------------
 
@@ -60,7 +63,8 @@ INSERT INTO `formdata` (`id_formdata`, `meno`, `priezvisko`, `vek`, `telcislo`, 
 (15, 'Skúška', 'Písmená', 19, '8646468968', 'nejaky@mail.com'),
 (16, 'Ďaľšia', 'Skúška', 21, '4354433853', 'skusanie@mail.com'),
 (17, 'Meno', 'Priezvisko', 22, '8674843864', 'asiuh@mail.com'),
-(18, 'Meno', 'Priezvisko', 30, '4683846846', 'mp@mail.com');
+(18, 'Meno', 'Priezvisko', 30, '4683846846', 'mp@mail.com'),
+(19, 'Prva', 'Optimalizacia', 21, '8434864684', 'optimalizacia1@shk.com');
 
 --
 -- Kľúče pre exportované tabuľky
@@ -92,5 +96,5 @@ ALTER TABLE `admindata`
 -- AUTO_INCREMENT pre tabuľku `formdata`
 --
 ALTER TABLE `formdata`
-  MODIFY `id_formdata` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id_formdata` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 COMMIT;

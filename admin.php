@@ -1,9 +1,6 @@
 <?php 
     session_start();
-    require_once("inc/funkcie.php");
-	require_once("inc/triedy/databaza.php");
-	require_once("inc/triedy/formdata.php");
-	require_once("inc/triedy/admindata.php");
+    require_once("inc/autoload.php");
     $odkazy_navigacia;
 
     if (isset($_GET["delete"])) {
@@ -16,14 +13,19 @@
     }
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $admin_meno = $_POST["admin-meno"];
+        $admin_email = $_POST["admin-email"];
         $admin_heslo = $_POST["admin-heslo"];
 
-        prihlasenie($admin_meno, $admin_heslo);
+        
+        $databaza = new Databaza();
+        $admindata = new AdminData($databaza);
+        if (!$admindata->prihlasenie($admin_email, $admin_heslo)) {
+            $chybaPrihlasenia = "Nesprávny email alebo heslo!";
+        }
     }
 
-    if (isset($_SESSION["admin_prihlaseny"]) && !empty($_SESSION["admin_prihlaseny"]) && $_SESSION["admin_prihlaseny"]) {
-        $odkazy_navigacia = array("Domovská stránka" => "index.php", "Údaje" => "#tabulka-databazy", "Odhlásiť sa" => "inc/odhlasenie.php");
+    if (isset($_SESSION["admin_prihlaseny"]) && $_SESSION["admin_prihlaseny"]) {
+        $odkazy_navigacia = array("Domovská stránka" => "index.php", "Údaje" => "#tabulka-databazy", "Odhlásiť sa" => "odhlasenie.php");
     } 
     else {
         $odkazy_navigacia = array("Domovská stránka" => "index.php", "Prihlásiť sa" => "#admin-prihlasenie");

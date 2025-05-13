@@ -1,7 +1,5 @@
 <?php
-    require_once("inc/funkcie.php");
-	require_once("inc/triedy/databaza.php");
-	require_once("inc/triedy/formdata.php");
+	require_once("inc/autoload.php");
 ?>
 
 <!DOCTYPE html>
@@ -56,7 +54,11 @@
 
 					<ul class="nav navbar-nav navbar-right">
 						<?php
-							echo(pridat_navigaciu($odkazy_navigacia));
+							$vystup = "";
+							foreach($odkazy_navigacia as $nazov_odkazu => $odkaz){
+								$vystup .= '<li><a href="' . $odkaz . '" class="smoothScroll">' . $nazov_odkazu . '</a></li>';
+							}
+							echo($vystup);
 						?>
 					</ul>
 

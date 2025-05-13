@@ -10,15 +10,15 @@
 		$telcislo = trim($_POST["telcislo"] ?? "");
 		$email = trim($_POST["email"] ?? "");
 
-		$meno = mb_ucfirst($meno); 
-		$priezvisko = mb_ucfirst($priezvisko); 
-		$telcislo = str_replace(" ", "", $telcislo);
+		try {
+			$databaza = new Databaza();
+			$formdata = new FormData($databaza);
 
-		if (overenieUdajov($meno, $priezvisko, $vek, $telcislo, $email)) {
-			try {
-				$databaza = new Databaza();
-				$formdata = new FormData($databaza);
-	
+			$meno = $formdata->mb_ucfirst($meno); 
+			$priezvisko = $formdata->mb_ucfirst($priezvisko); 
+			$telcislo = str_replace(" ", "", $telcislo);
+
+			if ($formdata->overenieUdajov($meno, $priezvisko, $vek, $telcislo, $email)) {
 				if ($formdata->pridatUdaje($meno, $priezvisko, $vek, $telcislo, $email)) {
 					$uspesna_registracia = true;
 				}
@@ -26,10 +26,10 @@
 					echo "<script>alert('Nepodarilo sa odoslať formulár!');</script>";
 				}
 			}
-			catch (PDOException $e) {
-				$chyba = "Chyba pripojenia k databáze: " . $e->getMessage();
-				echo "<script>alert('$chyba');</script>";
-			}
+		}
+		catch (PDOException $e) {
+			$chyba = "Chyba pripojenia k databáze: " . $e->getMessage();
+			echo "<script>alert('$chyba');</script>";
 		}
 	}
 ?>
@@ -210,16 +210,6 @@
 				</div>
 			</div>
 		</section>
-
-
-<?php if (!empty($uspesna_registracia) && $uspesna_registracia): ?>
-	<script>
-		window.onload = function() {
-			alert("Registrácia prebehla úspešne, viac informácií vám poskytneme emailom.");
-			window.location.href = "index.php";
-		};
-	</script>
-<?php endif; ?>
 
 <?php 
 	include("partials/footer.php");

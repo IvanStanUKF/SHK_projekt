@@ -5,32 +5,29 @@
         public function __construct(Databaza $databaza) {
             $this->databaza = $databaza->getSpojenie();
         }
+
+        public function prihlasenie($admin_email, $admin_heslo){
+            $dotaz = $this->databaza->prepare("SELECT * FROM admindata WHERE admin_email = :email");
+            $dotaz->bindParam(":email", $admin_email, PDO::PARAM_STR);
+            $dotaz->execute();
+            $uzivatel = $dotaz->fetch();
+
+            if ($uzivatel) {
+                if (password_verify($admin_heslo, $uzivatel["admin_heslo"])) {
+                    $_SESSION["admin_prihlaseny"] = true;
+                    $_SESSION["admin_id"] = $uzivatel["id_admindata"];
+                    $_SESSION["admin_email"] = $uzivatel["admin_email"];
+                    $_SESSION["admin_rola"] = $uzivatel["admin_rola"];
+                    return true;
+                }
+            }
+            return false;
+        }
     
         public function index() {
             $dotaz = $this->databaza->prepare("SELECT * FROM admindata");
             $dotaz->execute();
             return $dotaz->fetchAll(PDO::FETCH_ASSOC);
-        }
-
-        public function odstranitAdminUdaje($id) {
-            $dotaz = $this->databaza->prepare("DELETE FROM admindata WHERE id_admindata = :id");
-            $dotaz->bindParam(":id", $id, PDO::PARAM_INT);
-            return $dotaz->execute();
-        }
- 
-        public function pridajAdminUdaje($adminmeno, $adminheslo) {
-            $dotaz = $this->databaza->prepare("INSERT INTO admindata (admin_meno, admin_heslo) values(:adminmeno, :adminheslo)");
-            $dotaz->bindParam(":adminmeno", $adminmeno, PDO::PARAM_STR);
-            $dotaz->bindParam(":adminheslo", $adminheslo, PDO::PARAM_STR);
-            return $dotaz->execute();
-        }
-    
-        public function zmenAdminUdaje($id, $adminmeno, $adminheslo) {
-            $dotaz = $this->databaza->prepare("UPDATE admindata SET admin_meno = :adminmeno, admin_heslo = :adminheslo WHERE id_admindata = :id");
-            $dotaz->bindParam(":id", $id, PDO::PARAM_INT);
-            $dotaz->bindParam(":adminmeno", $adminmeno, PDO::PARAM_STR);
-            $dotaz->bindParam(":adminheslo", $adminheslo, PDO::PARAM_STR);
-            return $dotaz->execute();
         }
     }
 ?>

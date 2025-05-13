@@ -31,14 +31,14 @@
 
                                     foreach($_SESSION["admin_udaje"] as $riadok) {
                                         echo "<tr>";
-                                        echo "<td>".$riadok["id_formdata"]."</td>";
+                                        echo "<td class=\"td-center\">".$riadok["id_formdata"]."</td>";
                                         echo "<td>".$riadok["meno"]."</td>";
                                         echo "<td>".$riadok["priezvisko"]."</td>";
-                                        echo "<td>".$riadok["vek"]."</td>";
+                                        echo "<td class=\"td-center\">".$riadok["vek"]."</td>";
                                         echo "<td>".$riadok["telcislo"]."</td>";
                                         echo "<td>".$riadok["email"]."</td>";
-                                        echo '<td><a href="admin_uprava.php?id='.$riadok["id_formdata"].'" target="_blank">Upraviť</a></td>';
-                                        echo '<td><a href="?delete='.$riadok["id_formdata"].'" onclick="return confirm(\'Určite chcete vymazať tieto údaje?\')">Odstrániť</a></td>';
+                                        echo '<td class="td-center"><a href="admin_uprava.php?id='.$riadok["id_formdata"].'" target="_blank">Upraviť</a></td>';
+                                        echo '<td class="td-center"><a href="?delete='.$riadok["id_formdata"].'" onclick="return confirm(\'Určite chcete vymazať tieto údaje?\')">Odstrániť</a></td>';
                                         echo "</tr>";
                                     }
                                 }

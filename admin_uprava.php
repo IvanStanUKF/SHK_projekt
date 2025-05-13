@@ -1,8 +1,6 @@
 <?php 
     session_start();
-    require_once("inc/funkcie.php");
-	require_once("inc/triedy/databaza.php");
-	require_once("inc/triedy/formdata.php");
+    require_once("inc/autoload.php");
     $odkazy_navigacia;
     $uspesna_zmena = false;
 
@@ -20,26 +18,26 @@
 		$telcislo = trim($_POST["nove-telcislo"] ?? "");
 		$email = trim($_POST["novy-email"] ?? "");
 
-		$meno = mb_ucfirst($meno); 
-		$priezvisko = mb_ucfirst($priezvisko); 
-		$telcislo = str_replace(" ", "", $telcislo);
+		try {
+			$databaza = new Databaza();
+			$formdata = new FormData($databaza);
 
-		if (overenieUdajov($meno, $priezvisko, $vek, $telcislo, $email)) {
-			try {
-				$databaza = new Databaza();
-				$formdata = new FormData($databaza);
-	
-				if ($formdata->zmenitUdaje($id, $meno, $priezvisko, $vek, $telcislo, $email)) {
-					$uspesna_zmena = true;
+			$meno = $formdata->mb_ucfirst($meno); 
+			$priezvisko = $formdata->mb_ucfirst($priezvisko); 
+			$telcislo = str_replace(" ", "", $telcislo);
+
+			if ($formdata->overenieUdajov($meno, $priezvisko, $vek, $telcislo, $email)) {
+				if ($formdata->pridatUdaje($meno, $priezvisko, $vek, $telcislo, $email)) {
+					$uspesna_registracia = true;
 				}
 				else {
 					echo "<script>alert('Nepodarilo sa odoslať formulár!');</script>";
 				}
 			}
-			catch (PDOException $e) {
-				$chyba = "Chyba pripojenia k databáze: " . $e->getMessage();
-				echo "<script>alert('$chyba');</script>";
-			}
+		}
+		catch (PDOException $e) {
+			$chyba = "Chyba pripojenia k databáze: " . $e->getMessage();
+			echo "<script>alert('$chyba');</script>";
 		}
 	}
 
