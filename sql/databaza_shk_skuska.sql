@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hostiteľ: 127.0.0.1
--- Čas generovania: Út 13.Máj 2025, 09:39
+-- Čas generovania: Št 12.Jún 2025, 03:09
 -- Verzia serveru: 10.4.32-MariaDB
 -- Verzia PHP: 8.2.12
 
@@ -55,22 +55,46 @@ CREATE TABLE `formdata` (
   `priezvisko` varchar(25) NOT NULL,
   `vek` int(3) NOT NULL,
   `telcislo` varchar(12) NOT NULL,
-  `email` varchar(50) NOT NULL
+  `email` varchar(50) NOT NULL,
+  `stav_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_slovak_ci;
 
 --
 -- Sťahujem dáta pre tabuľku `formdata`
 --
 
-INSERT INTO `formdata` (`id_formdata`, `meno`, `priezvisko`, `vek`, `telcislo`, `email`) VALUES
-(1, 'Ivan', 'Skúša', 20, '0123456789', 'mail@mail.com'),
-(8, 'Meno', 'Priezvisko', 20, '123456789', 'funguj@mail.com'),
-(14, 'Meno', 'Priezvisko', 18, '9630852741', 'funguje.to@mail.com'),
-(15, 'Skúška', 'Písmená', 19, '8646468968', 'nejaky@mail.com'),
-(16, 'Ďaľšia', 'Skúška', 21, '4354433853', 'skusanie@mail.com'),
-(17, 'Meno', 'Priezvisko', 22, '8674843864', 'asiuh@mail.com'),
-(18, 'Meno', 'Priezvisko', 30, '4683846846', 'mp@mail.com'),
-(19, 'Prva', 'Optimalizacia', 21, '8434864684', 'optimalizacia1@shk.com');
+INSERT INTO `formdata` (`id_formdata`, `meno`, `priezvisko`, `vek`, `telcislo`, `email`, `stav_id`) VALUES
+(1, 'Ivan', 'Skúša', 20, '0123456789', 'mail@mail.com', 4),
+(8, 'Meno', 'Priezvisko', 20, '123456789', 'funguj@mail.com', 5),
+(14, 'Meno', 'Priezvisko', 18, '9630852741', 'funguje.to@mail.com', 4),
+(15, 'Skúška', 'Písmená', 19, '8646468968', 'nejaky@mail.com', 3),
+(16, 'Ďaľšia', 'Skúška', 21, '4354433853', 'skusanie@mail.com', 3),
+(17, 'Meno', 'Priezvisko', 22, '8674843864', 'asiuh@mail.com', NULL),
+(18, 'Meno', 'Priezvisko', 30, '4683846846', 'mp@mail.com', 2),
+(19, 'Prvá', 'Optimalizácia', 21, '8434864684', 'optimalizacia1@shk.com', 1),
+(20, 'Veľké', 'Finále', 18, '0000123456', 'velke.finale@mail.com', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Štruktúra tabuľky pre tabuľku `formdata_stav`
+--
+
+CREATE TABLE `formdata_stav` (
+  `id_stav` int(11) NOT NULL,
+  `stav` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_slovak_ci;
+
+--
+-- Sťahujem dáta pre tabuľku `formdata_stav`
+--
+
+INSERT INTO `formdata_stav` (`id_stav`, `stav`) VALUES
+(1, 'Zaregistrovaný'),
+(2, 'Zaznamenaný'),
+(3, 'Navštevuje kurz'),
+(4, 'Ukončil úspešne'),
+(5, 'Ukončil neúspešne');
 
 --
 -- Kľúče pre exportované tabuľky
@@ -86,7 +110,14 @@ ALTER TABLE `admindata`
 -- Indexy pre tabuľku `formdata`
 --
 ALTER TABLE `formdata`
-  ADD PRIMARY KEY (`id_formdata`);
+  ADD PRIMARY KEY (`id_formdata`),
+  ADD KEY `fk_formdata_stav` (`stav_id`);
+
+--
+-- Indexy pre tabuľku `formdata_stav`
+--
+ALTER TABLE `formdata_stav`
+  ADD PRIMARY KEY (`id_stav`);
 
 --
 -- AUTO_INCREMENT pre exportované tabuľky
@@ -102,7 +133,23 @@ ALTER TABLE `admindata`
 -- AUTO_INCREMENT pre tabuľku `formdata`
 --
 ALTER TABLE `formdata`
-  MODIFY `id_formdata` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id_formdata` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
+--
+-- AUTO_INCREMENT pre tabuľku `formdata_stav`
+--
+ALTER TABLE `formdata_stav`
+  MODIFY `id_stav` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- Obmedzenie pre exportované tabuľky
+--
+
+--
+-- Obmedzenie pre tabuľku `formdata`
+--
+ALTER TABLE `formdata`
+  ADD CONSTRAINT `fk_formdata_stav` FOREIGN KEY (`stav_id`) REFERENCES `formdata_stav` (`id_stav`) ON DELETE SET NULL ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

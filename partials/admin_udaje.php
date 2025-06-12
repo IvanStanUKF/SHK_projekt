@@ -12,7 +12,7 @@
 
 				<div class="row">
 					<div class="wow col-md-12 col-sm-12 fadeInUp" data-wow-delay="0.6s">
-                        <table class="tabulka-databazy">
+                        <div class="tabulka-wrapper"><table class="tabulka-databazy">
                             <tr>
                                 <th>ID</th>
                                 <th>Meno</th>
@@ -20,6 +20,7 @@
                                 <th>Vek</th>
                                 <th>Telefónne číslo</th>
                                 <th>Email</th>
+                                <th>Stav</th>
                                 <th>Upraviť dáta</th>
                                 <th>Odstrániť dáta</th>
                             </tr>
@@ -37,13 +38,14 @@
                                         echo "<td class=\"td-center\">".$riadok["vek"]."</td>";
                                         echo "<td>".$riadok["telcislo"]."</td>";
                                         echo "<td>".$riadok["email"]."</td>";
+                                        echo "<td>".$riadok["stav"]."</td>";
                                         echo '<td class="td-center"><a href="admin_uprava.php?id='.$riadok["id_formdata"].'" target="_blank">Upraviť</a></td>';
                                         echo '<td class="td-center"><a href="?delete='.$riadok["id_formdata"].'" onclick="return confirm(\'Určite chcete vymazať tieto údaje?\')">Odstrániť</a></td>';
                                         echo "</tr>";
                                     }
                                 }
                             ?>
-                        </table>
+                        </table></div>
 
                     </div>
 

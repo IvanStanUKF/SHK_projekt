@@ -59,9 +59,15 @@
                 return false;
             }
         }
+        
+        public function getStavy() {
+            $dotaz = $this->databaza->prepare("SELECT * FROM formdata_stav");
+            $dotaz->execute();
+            return $dotaz->fetchAll(PDO::FETCH_ASSOC);
+        }
     
         public function index() {
-            $dotaz = $this->databaza->prepare("SELECT * FROM formdata");
+            $dotaz = $this->databaza->prepare("SELECT f.*, fs.stav FROM formdata f LEFT OUTER JOIN formdata_stav fs ON f.stav_id = fs.id_stav");
             $dotaz->execute();
             return $dotaz->fetchAll(PDO::FETCH_ASSOC);
         }
@@ -75,13 +81,14 @@
         public function pridatUdaje($meno, $priezvisko, $vek, $telcislo, $email) {
             if (!$this->kontrolaDuplicityKontaktu($telcislo, $email, false)) { return false; }
 
-            $dotaz = $this->databaza->prepare("INSERT INTO formdata (meno, priezvisko, vek, telcislo, email) values(:meno, :priezvisko, :vek, :telcislo, :email)");
+            $dotaz = $this->databaza->prepare("INSERT INTO formdata (meno, priezvisko, vek, telcislo, email, stav_id) values(:meno, :priezvisko, :vek, :telcislo, :email, :stav_id)");
             
             $dotaz->bindParam(":meno", $meno, PDO::PARAM_STR);
             $dotaz->bindParam(":priezvisko", $priezvisko, PDO::PARAM_STR);
             $dotaz->bindParam(":vek", $vek, PDO::PARAM_INT);
             $dotaz->bindParam(":telcislo", $telcislo, PDO::PARAM_STR);
             $dotaz->bindParam(":email", $email, PDO::PARAM_STR);
+            $dotaz->bindValue(":stav_id", 1, PDO::PARAM_INT);
             
             return $dotaz->execute();
         }
@@ -93,10 +100,10 @@
             return $dotaz->fetch(PDO::FETCH_ASSOC);
         }
     
-        public function zmenitUdaje($id, $meno, $priezvisko, $vek, $telcislo, $email) {
+        public function zmenitUdaje($id, $meno, $priezvisko, $vek, $telcislo, $email, $stav_id) {
             if (!$this->kontrolaDuplicityKontaktu($telcislo, $email, true, $id)) { return false; }
 
-            $dotaz = $this->databaza->prepare("UPDATE formdata SET meno = :meno, priezvisko = :priezvisko, vek = :vek, telcislo = :telcislo, email = :email WHERE id_formdata = :id");
+            $dotaz = $this->databaza->prepare("UPDATE formdata SET meno = :meno, priezvisko = :priezvisko, vek = :vek, telcislo = :telcislo, email = :email, stav_id = :stav_id WHERE id_formdata = :id");
     
             $dotaz->bindParam(":id", $id, PDO::PARAM_INT);
             $dotaz->bindParam(":meno", $meno, PDO::PARAM_STR);
@@ -104,6 +111,7 @@
             $dotaz->bindParam(":vek", $vek, PDO::PARAM_INT);
             $dotaz->bindParam(":telcislo", $telcislo, PDO::PARAM_STR);
             $dotaz->bindParam(":email", $email, PDO::PARAM_STR);
+            $dotaz->bindParam(":stav_id", $stav_id, PDO::PARAM_INT);
             
             return $dotaz->execute();
         }

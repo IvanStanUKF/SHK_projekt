@@ -1,9 +1,15 @@
 <?php 
+	session_start();
+	
 	$odkazy_navigacia = array("Intro"=>"#intro", "O kurze"=>"#overview", "Ciele kurzu"=>"#detail", "Registrácia"=>"#register", "Časté otázky"=>"#faq", "Admin"=>"admin.php");
 	include("partials/header.php");
 
 	$uspesna_registracia = false;
 	if ($_SERVER["REQUEST_METHOD"] == "POST") {
+		if (!isset($_POST["csrf_token"]) || $_POST["csrf_token"] !== $_SESSION["csrf_token"]) {
+			die("Neplatný CSRF token. Akcia bola zablokovaná.");
+		}
+
 		$meno = trim($_POST["meno"] ?? "");
 		$priezvisko = trim($_POST["priezvisko"] ?? "");
 		$vek = trim($_POST["vek"] ?? "");
@@ -126,6 +132,7 @@
 							<input name="vek" type="number" class="form-control" id="age" placeholder="Vek" value="<?php echo htmlspecialchars($vek ?? ''); ?>" required>
 							<input name="telcislo" type="telephone" class="form-control" id="phone" placeholder="Telefónne číslo" value="<?php echo htmlspecialchars($telcislo ?? ''); ?>" required>
 							<input name="email" type="email" class="form-control" id="email" placeholder="Email" value="<?php echo htmlspecialchars($email ?? ''); ?>" required>
+							<input name="csrf_token" type="hidden" value="<?php echo $_SESSION["csrf_token"]; ?>">
 							<div class="col-md-offset-6 col-md-6 col-sm-offset-1 col-sm-10">
 								<input name="submit" type="submit" class="form-control" id="submit" value="Registrácia">
 							</div>

@@ -9,29 +9,43 @@
         $formdata = new FormData($databaza);
         $id = $_GET["id"];
         $staredata = $formdata->zobrazitUdaj($id);
+		$stavy = $formdata->getStavy();
     }
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
+		if (!isset($_POST["csrf_token"]) || $_POST["csrf_token"] !== $_SESSION["csrf_token"]) {
+			die("Neplatný CSRF token. Akcia bola zablokovaná.");
+		}
+
 		$meno = trim($_POST["nove-meno"] ?? "");
 		$priezvisko = trim($_POST["nove-priezvisko"] ?? "");
 		$vek = trim($_POST["novy-vek"] ?? "");
 		$telcislo = trim($_POST["nove-telcislo"] ?? "");
 		$email = trim($_POST["novy-email"] ?? "");
+    	$stav_id = trim($_POST["novy-stav"] ?? "");
 
 		try {
 			$databaza = new Databaza();
 			$formdata = new FormData($databaza);
+			$stavy = $formdata->getStavy();
+			$stavy_pole = array_column($stavy, 'id_stav');
 
 			$meno = $formdata->mb_ucfirst($meno); 
 			$priezvisko = $formdata->mb_ucfirst($priezvisko); 
 			$telcislo = str_replace(" ", "", $telcislo);
 
 			if ($formdata->overenieUdajov($meno, $priezvisko, $vek, $telcislo, $email)) {
-				if ($formdata->pridatUdaje($meno, $priezvisko, $vek, $telcislo, $email)) {
-					$uspesna_registracia = true;
+				if (in_array($stav_id, $stavy_pole)) {
+					if ($formdata->zmenitUdaje($id, $meno, $priezvisko, $vek, $telcislo, $email, $stav_id)) {
+						$uspesna_zmena = true;
+						$staredata = $formdata->zobrazitUdaj($id);
+					}
+					else {
+						echo "<script>alert('Nepodarilo sa odoslať formulár!');</script>";
+					}
 				}
 				else {
-					echo "<script>alert('Nepodarilo sa odoslať formulár!');</script>";
+					echo "<script>alert('Neplatný stav!');</script>";
 				}
 			}
 		}

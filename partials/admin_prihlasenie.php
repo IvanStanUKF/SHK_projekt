@@ -25,6 +25,7 @@
 								</div>
 							<?php endif; ?>
 							
+							<input name="csrf_token" type="hidden" value="<?php echo $_SESSION["csrf_token"]; ?>">
 							<div class="col-md-offset-6 col-md-6 col-sm-offset-1 col-sm-10">
 								<input name="aprihlasenie" type="submit" class="form-control" id="aprihlasenie" value="Prihlásenie">
 							</div>

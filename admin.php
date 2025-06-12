@@ -13,14 +13,23 @@
     }
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        if (!isset($_POST["csrf_token"]) || $_POST["csrf_token"] !== $_SESSION["csrf_token"]) {
+            die("Neplatný CSRF token. Akcia bola zablokovaná.");
+        }
+
         $admin_email = $_POST["admin-email"];
         $admin_heslo = $_POST["admin-heslo"];
 
-        
-        $databaza = new Databaza();
-        $admindata = new AdminData($databaza);
-        if (!$admindata->prihlasenie($admin_email, $admin_heslo)) {
-            $chybaPrihlasenia = "Nesprávny email alebo heslo!";
+        try {
+            $databaza = new Databaza();
+            $admindata = new AdminData($databaza);
+            if (!$admindata->prihlasenie($admin_email, $admin_heslo)) {
+                $chybaPrihlasenia = "Nesprávny email alebo heslo!";
+            }
+        }
+        catch (PDOException $e) {
+            $chyba = "Chyba pripojenia k databáze: " . $e->getMessage();
+            echo "<script>alert('$chyba');</script>";
         }
     }
 

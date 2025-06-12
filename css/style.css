@@ -469,6 +469,20 @@ footer {
   color: #aaaaaa;
 }
 
+select.form-control {
+  background-color: #222;
+  color: #ffffff;
+  border: 1px solid #444;
+  border-radius: 10px;
+  height: auto;
+  line-height: 1.5;
+}
+
+select.form-control option {
+  background-color: #222;
+  color: #ffffff;
+}
+
 
 
 /*---------------------------------------
@@ -484,8 +498,15 @@ footer {
   margin-bottom: 30px;
 }
 
+.tabulka-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
 .tabulka-databazy {
   width: 100%;
+  max-width: 100%;
+  min-width: 500px;
   border-collapse: collapse;
   margin: 20px auto;
   background-color: #1e1e1e;
