@@ -483,6 +483,14 @@ select.form-control option {
   color: #ffffff;
 }
 
+#registracia #typ {
+  color: #888;
+}
+
+#registracia #typ option {
+  color: #888;
+}
+
 
 
 /*---------------------------------------
@@ -519,7 +527,7 @@ select.form-control option {
 
 .tabulka-databazy th, .tabulka-databazy td {
   border: 1px solid #444;
-  padding: 10px 15px;
+  padding: 10px;
   text-align: left;
 }
 

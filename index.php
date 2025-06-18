@@ -4,7 +4,11 @@
 	$odkazy_navigacia = array("Intro"=>"#intro", "O kurze"=>"#overview", "Ciele kurzu"=>"#detail", "Registrácia"=>"#register", "Časté otázky"=>"#faq", "Admin"=>"admin.php");
 	include("partials/header.php");
 
+	$databaza = new Databaza();
+	$formdata = new FormData($databaza);
+	$typy_kurzov = $formdata->getTypyKurzov();
 	$uspesna_registracia = false;
+
 	if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		if (!isset($_POST["csrf_token"]) || $_POST["csrf_token"] !== $_SESSION["csrf_token"]) {
 			die("Neplatný CSRF token. Akcia bola zablokovaná.");
@@ -15,21 +19,29 @@
 		$vek = trim($_POST["vek"] ?? "");
 		$telcislo = trim($_POST["telcislo"] ?? "");
 		$email = trim($_POST["email"] ?? "");
+		$typ_kurzu = trim($_POST["typ"] ?? "");
 
 		try {
 			$databaza = new Databaza();
 			$formdata = new FormData($databaza);
+			$typy_kurzov = $formdata->getTypyKurzov();
+			$typy_pole = array_column($typy_kurzov, 'id_typy_kurzov');
 
 			$meno = $formdata->mb_ucfirst($meno); 
 			$priezvisko = $formdata->mb_ucfirst($priezvisko); 
 			$telcislo = str_replace(" ", "", $telcislo);
 
 			if ($formdata->overenieUdajov($meno, $priezvisko, $vek, $telcislo, $email)) {
-				if ($formdata->pridatUdaje($meno, $priezvisko, $vek, $telcislo, $email)) {
-					$uspesna_registracia = true;
+				if (in_array($typ_kurzu, $typy_pole)) {
+					if ($formdata->pridatUdaje($meno, $priezvisko, $vek, $telcislo, $email, $typ_kurzu)) {
+						$uspesna_registracia = true;
+					}
+					else {
+						echo "<script>alert('Nepodarilo sa odoslať formulár!');</script>";
+					}
 				}
 				else {
-					echo "<script>alert('Nepodarilo sa odoslať formulár!');</script>";
+					echo "<script>alert('Neplatný typ kurzu!');</script>";
 				}
 			}
 		}
@@ -127,11 +139,19 @@
 
 					<div class="wow fadeInUp col-md-5 col-sm-5" data-wow-delay="1s">
 						<form action="" method="POST" id="registracia">
-							<input name="meno" type="text" class="form-control" id="firstname" placeholder="Meno" value="<?php echo htmlspecialchars($meno ?? ''); ?>" required>
-							<input name="priezvisko" type="text" class="form-control" id="lastname" placeholder="Priezvisko" value="<?php echo htmlspecialchars($priezvisko ?? ''); ?>" required>
-							<input name="vek" type="number" class="form-control" id="age" placeholder="Vek" value="<?php echo htmlspecialchars($vek ?? ''); ?>" required>
-							<input name="telcislo" type="telephone" class="form-control" id="phone" placeholder="Telefónne číslo" value="<?php echo htmlspecialchars($telcislo ?? ''); ?>" required>
+							<input name="meno" type="text" class="form-control" id="meno" placeholder="Meno" value="<?php echo htmlspecialchars($meno ?? ''); ?>" required>
+							<input name="priezvisko" type="text" class="form-control" id="priezvisko" placeholder="Priezvisko" value="<?php echo htmlspecialchars($priezvisko ?? ''); ?>" required>
+							<input name="vek" type="number" class="form-control" id="vek" placeholder="Vek" value="<?php echo htmlspecialchars($vek ?? ''); ?>" required>
+							<input name="telcislo" type="telephone" class="form-control" id="telcislo" placeholder="Telefónne číslo" value="<?php echo htmlspecialchars($telcislo ?? ''); ?>" required>
 							<input name="email" type="email" class="form-control" id="email" placeholder="Email" value="<?php echo htmlspecialchars($email ?? ''); ?>" required>
+							<select name="typ" class="form-control" id="typ" required>
+								<option value="" disabled selected>Vyberte čas kurzu</option>
+								<?php
+									foreach ($typy_kurzov as $typ) {
+										echo '<option value="'.$typ['id_typy_kurzov'].'">'.$typ['typ_kurzu'].'</option>';
+									}
+								?>
+							</select>
 							<input name="csrf_token" type="hidden" value="<?php echo $_SESSION["csrf_token"]; ?>">
 							<div class="col-md-offset-6 col-md-6 col-sm-offset-1 col-sm-10">
 								<input name="submit" type="submit" class="form-control" id="submit" value="Registrácia">
@@ -217,6 +237,15 @@
 				</div>
 			</div>
 		</section>
+
+		<?php if (isset($uspesna_registracia) && $uspesna_registracia): ?>
+			<script>
+				window.onload = function() {
+					alert("Registrácia prebehla úspešne, viac informácií vám poskytneme emailom.");
+					window.location.href = "index.php";
+				};
+			</script>
+		<?php endif; ?>
 
 <?php 
 	include("partials/footer.php");

@@ -39,14 +39,5 @@
 		<script src="js/custom.js"></script>
 		<script src="js/formular.js"></script>
 
-		<?php if (isset($uspesna_registracia) && $uspesna_registracia): ?>
-			<script>
-				window.onload = function() {
-					alert("Registrácia prebehla úspešne, viac informácií vám poskytneme emailom.");
-					window.location.href = "index.php";
-				};
-			</script>
-		<?php endif; ?>
-
 	</body>
 </html>

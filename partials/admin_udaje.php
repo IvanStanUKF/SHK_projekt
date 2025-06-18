@@ -21,8 +21,12 @@
                                 <th>Telefónne číslo</th>
                                 <th>Email</th>
                                 <th>Stav</th>
-                                <th>Upraviť dáta</th>
-                                <th>Odstrániť dáta</th>
+                                <th>Typ kurzu</th>
+                                <th>Kurz</th>
+                                <?php if ($_SESSION["admin_upravenie"] == 1): ?>
+                                    <th>Upraviť dáta</th>
+                                    <th>Odstrániť dáta</th>
+                                <?php endif; ?>
                             </tr>
                             <?php
                                 if (isset($_SESSION["admin_prihlaseny"]) && $_SESSION["admin_prihlaseny"]) {
@@ -38,9 +42,13 @@
                                         echo "<td class=\"td-center\">".$riadok["vek"]."</td>";
                                         echo "<td>".$riadok["telcislo"]."</td>";
                                         echo "<td>".$riadok["email"]."</td>";
-                                        echo "<td>".$riadok["stav"]."</td>";
-                                        echo '<td class="td-center"><a href="admin_uprava.php?id='.$riadok["id_formdata"].'" target="_blank">Upraviť</a></td>';
-                                        echo '<td class="td-center"><a href="?delete='.$riadok["id_formdata"].'" onclick="return confirm(\'Určite chcete vymazať tieto údaje?\')">Odstrániť</a></td>';
+                                        echo "<td class=\"td-center\">".$riadok["stav"]."</td>";
+                                        echo "<td class=\"td-center\">".$riadok["typ_kurzu"]."</td>";
+                                        echo "<td class=\"td-center\">".$riadok["kurz"]."</td>";
+                                        if ($_SESSION["admin_upravenie"] == 1) {
+                                            echo '<td class="td-center"><a href="admin_uprava.php?id='.$riadok["id_formdata"].'" target="_blank">Upraviť</a></td>';
+                                            echo '<td class="td-center"><a href="?delete='.$riadok["id_formdata"].'" onclick="return confirm(\'Určite chcete vymazať tieto údaje?\')">Odstrániť</a></td>';
+                                        }
                                         echo "</tr>";
                                     }
                                 }

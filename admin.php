@@ -3,7 +3,7 @@
     require_once("inc/autoload.php");
     $odkazy_navigacia;
 
-    if (isset($_GET["delete"])) {
+    if (isset($_GET["delete"]) && $_SESSION["admin_upravenie"] == 1) {
         $databaza = new Databaza();
         $formdata = new FormData($databaza);
         $formdata->odstranitUdaje($_GET["delete"]);

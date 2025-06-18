@@ -10,6 +10,8 @@
         $id = $_GET["id"];
         $staredata = $formdata->zobrazitUdaj($id);
 		$stavy = $formdata->getStavy();
+		$typy_kurzov = $formdata->getTypyKurzov();
+		$kurzy = $formdata->getKurzy();
     }
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -22,30 +24,43 @@
 		$vek = trim($_POST["novy-vek"] ?? "");
 		$telcislo = trim($_POST["nove-telcislo"] ?? "");
 		$email = trim($_POST["novy-email"] ?? "");
-    	$stav_id = trim($_POST["novy-stav"] ?? "");
+		$stav_id = trim($_POST["novy-stav"] ?? null);
+		$typ_kurzu_id = trim($_POST["novy-typ"] ?? "");
+		$kurz_id = trim($_POST["novy-kurz"] ?? null);
+		if ($stav_id === '' || $stav_id === null) { $stav_id = null; }
+		if ($kurz_id === '' || $kurz_id === null) { $kurz_id = null; }
 
 		try {
 			$databaza = new Databaza();
 			$formdata = new FormData($databaza);
+
 			$stavy = $formdata->getStavy();
 			$stavy_pole = array_column($stavy, 'id_stav');
+			$typy_kurzov = $formdata->getTypyKurzov();
+			$typy_pole = array_column($typy_kurzov, 'id_typy_kurzov');
+			$kurzy = $formdata->getKurzy();
+			$kurzy_pole = array_column($kurzy, 'id_kurzy');
 
 			$meno = $formdata->mb_ucfirst($meno); 
 			$priezvisko = $formdata->mb_ucfirst($priezvisko); 
 			$telcislo = str_replace(" ", "", $telcislo);
 
 			if ($formdata->overenieUdajov($meno, $priezvisko, $vek, $telcislo, $email)) {
-				if (in_array($stav_id, $stavy_pole)) {
-					if ($formdata->zmenitUdaje($id, $meno, $priezvisko, $vek, $telcislo, $email, $stav_id)) {
-						$uspesna_zmena = true;
-						$staredata = $formdata->zobrazitUdaj($id);
-					}
-					else {
-						echo "<script>alert('Nepodarilo sa odoslať formulár!');</script>";
-					}
+				if (!in_array($stav_id, $stavy_pole) && $stav_id != null) {
+					echo "<script>alert('Neplatný stav!');</script>";
+				}
+				else if (!in_array($typ_kurzu_id, $typy_pole)) {
+					echo "<script>alert('Neplatný typ kurzu!');</script>";
+				}
+				else if (!in_array($kurz_id, $kurzy_pole) && $kurz_id != null) {
+					echo "<script>alert('Neplatný kurz!');</script>";
+				}
+				else if ($formdata->zmenitUdaje($id, $meno, $priezvisko, $vek, $telcislo, $email, $stav_id, $typ_kurzu_id, $kurz_id)) {
+					$uspesna_zmena = true;
+					$staredata = $formdata->zobrazitUdaj($id);
 				}
 				else {
-					echo "<script>alert('Neplatný stav!');</script>";
+					echo "<script>alert('Nepodarilo sa odoslať formulár!');</script>";
 				}
 			}
 		}
@@ -55,11 +70,12 @@
 		}
 	}
 
-    if (isset($_SESSION["admin_prihlaseny"]) && $_SESSION["admin_prihlaseny"]) {
+    if (isset($_SESSION["admin_prihlaseny"]) && $_SESSION["admin_prihlaseny"] && $_SESSION["admin_upravenie"] == 1) {
         $odkazy_navigacia = array("Domovská stránka" => "index.php", "Úprava dát" => "#admin-uprava", "Admin" => "admin.php");
     } 
     else {
-        $odkazy_navigacia = array("Domovská stránka" => "index.php");
+        header("Location: admin.php");
+		exit;
     }
 
 	require("partials/header.php");
